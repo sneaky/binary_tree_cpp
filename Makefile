@@ -1,14 +1,16 @@
 EXE = binary_tree
 CC = g++
+OBJDIR = obj
 SRC = $(wildcard *.cpp)
 HDR = $(wildcard *.h)
+#OBJ = $(patsubst %.cpp, %.o, $(SRC))
 LIBS = -Wall
 
-$(EXE): $(OBJ)
-	$(CC) $(OBJ) -o $(EXE) $(LIBS)
+$(EXE): $(SRC)
+	$(CC) $(SRC) -o $(EXE) $(LIBS)
 
 clean:
-	rm $(EXE)
+	rm -rf $(EXE)
 
 debug: $(SRC) $(HDR)
 	$(CC) $(SRC) -g -o $(EXE) $(LIBS)
