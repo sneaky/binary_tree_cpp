@@ -20,6 +20,22 @@ private:
     void inOrderTraversalHelper(TreeNode* tree) const;
     void preOrderTraversalHelper(TreeNode* tree) const;
     void destroyTree(TreeNode* tree);
+    //TODO: Add delete and supporting methods
+    void delFullParent(TreeNode* tree);
+    void delSingleParent(TreeNode* tree);
+    void delLeaf(TreeNode* tree);
+    bool isFullParent(TreeNode* tree) const;
+    bool isSingleParent(TreeNode* tree) const;
+    bool isLeaf(TreeNode* tree) const;
+    TreeNode* getNode(int data) const;
+    TreeNode* getParent(int data, TreeNode* tree) const;
+    TreeNode* getChild(TreeNode* tree) const;
+    TreeNode* getLeftChild(TreeNode* tree) const;
+    TreeNode* getRightChild(TreeNode* tree) const;
+    TreeNode* getLeftMost(TreeNode* tree) const;
+    TreeNode* getRightMost(TreeNode* tree) const;
+    TreeNode* getPredecessor(TreeNode* tree) const;
+    TreeNode* getSuccessor(TreeNode* tree) const;
 
 public:
     BinaryTree();
@@ -29,6 +45,8 @@ public:
     bool search(int data) const;
     void inOrderTraversal() const;
     void preOrderTraversal() const;
+    //TODO: Add delete and supporting methods
+    bool del(TreeNode* tree);
 };
 
 #endif

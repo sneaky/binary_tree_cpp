@@ -78,6 +78,70 @@ void BinaryTree::preOrderTraversal() const {
     preOrderTraversalHelper(root);
 }
 
+void BinaryTree::preOrderTraversal() const {
+    preOrderTraversalHelper(root);
+}
+
+void BinaryTree::delFullParent(TreeNode* tree) {
+    //TODO: implement this
+}
+
+void BinaryTree::delSingleParent(TreeNode* tree)  {
+    //TODO: implement this
+}
+
+void BinaryTree::delLeaf(TreeNode* tree) {
+    //TODO: implement this
+}
+
+bool BinaryTree::isFullParent(TreeNode* tree) const {
+    //TODO: implement this
+}
+
+bool BinaryTree::isSingleParent(TreeNode* tree) const {
+    //TODO: implement this
+}
+
+bool BinaryTree::isLeaf(TreeNode* tree) const {
+    //TODO: implement this
+}
+
+BinaryTree::TreeNode* BinaryTree::getNode(int x) const {
+    //TODO: implement this
+}
+
+BinaryTree::TreeNode* BinaryTree::getParent(int data, TreeNode* tree) const {
+    //TODO: implement this
+}
+
+BinaryTree::TreeNode* BinaryTree::getChild(TreeNode* tree) const {
+    //TODO: implement this
+}
+
+BinaryTree::TreeNode* BinaryTree::getLeftChild(TreeNode* tree) const {
+    //TODO: implement this
+}
+
+BinaryTree::TreeNode* BinaryTree::getRightChild(TreeNode* tree) const {
+    //TODO: implement this
+}
+
+BinaryTree::TreeNode* BinaryTree::getLeftMost(TreeNode* tree) const {
+    //TODO: implement this
+}
+
+BinaryTree::TreeNode* BinaryTree::getRightMost(TreeNode* tree) const {
+    //TODO: implement this
+}
+
+BinaryTree::TreeNode* BinaryTree::getPredecessor(TreeNode* tree) const {
+    //TODO: implement this
+}
+
+BinaryTree::TreeNode* BinaryTree::getSuccessor(TreeNode* tree) const {
+    //TODO: implement this
+}
+
 int main() {
     BinaryTree bst;
 
