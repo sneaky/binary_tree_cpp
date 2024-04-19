@@ -78,69 +78,202 @@ void BinaryTree::preOrderTraversal() const {
     preOrderTraversalHelper(root);
 }
 
-void BinaryTree::preOrderTraversal() const {
-    preOrderTraversalHelper(root);
+bool BinaryTree::del(int data) {
+    TreeNode* curr = getNode(data);
+    
+    if (curr == nullptr) { return false; }
+
+    if (isLeaf(curr)) {
+        delLeaf(curr);
+    } else if (isFullParent(curr)) {
+        delFullParent(curr);
+    } else {
+        delSingleParent(curr);
+    }
+
+    return true;
 }
 
 void BinaryTree::delFullParent(TreeNode* tree) {
-    //TODO: implement this
+    TreeNode* curr = getSuccessor(tree);
+    int x = curr->data;
+
+    if (isLeaf(curr)) {
+        delLeaf(curr);
+    } else {
+        if (curr->data > getParent(curr->data, curr)->data) {
+            getParent(curr->data, curr)->right = curr->right;
+        } else {
+            getParent(curr->data, curr)->left = curr->left;
+        }
+        delete curr;
+    }
+
+    tree->data = x;
 }
 
 void BinaryTree::delSingleParent(TreeNode* tree)  {
-    //TODO: implement this
+    TreeNode* curr = getParent(tree->data, tree);
+
+    if (curr->right == tree) {
+        curr->right = getChild(tree);
+    } else {
+        curr->left = getChild(tree);
+    }
+
+    delete tree;
 }
 
 void BinaryTree::delLeaf(TreeNode* tree) {
-    //TODO: implement this
+    if (tree == getParent(tree->data, tree)->right) {
+        getParent(tree->data, tree)->right = nullptr;
+    } else {
+        getParent(tree->data, tree)->left = nullptr;
+    }
+
+    delete tree;
 }
 
 bool BinaryTree::isFullParent(TreeNode* tree) const {
-    //TODO: implement this
+    return getNode(tree->data)->left != nullptr && getNode(tree->data)->right != nullptr;
 }
 
 bool BinaryTree::isSingleParent(TreeNode* tree) const {
-    //TODO: implement this
+    return !isFullParent(tree) && !isLeaf(tree);
 }
 
 bool BinaryTree::isLeaf(TreeNode* tree) const {
-    //TODO: implement this
+    return getNode(tree->data)->left == nullptr && getNode(tree->data)->right == nullptr;
 }
 
 BinaryTree::TreeNode* BinaryTree::getNode(int x) const {
-    //TODO: implement this
+    TreeNode* curr = root;
+    while (curr->data != x) {
+        if (curr == nullptr) { return nullptr; }
+        if (curr->data > x) {
+            curr = curr->left;
+        } else {
+            curr = curr->right;
+        }
+    }
+
+    return curr;
 }
 
 BinaryTree::TreeNode* BinaryTree::getParent(int data, TreeNode* tree) const {
-    //TODO: implement this
+    if (tree == nullptr) { return nullptr; }
+
+    TreeNode* curr = root;
+    return getParentHelper(data, curr);
+}
+
+// TODO: fix getParent() so that we don't need this helper function.
+// since we only need access to the data we want to find and the root node,
+// change getParent() parameters so we only need to pass it the data we're looking for.
+BinaryTree::TreeNode* BinaryTree::getParentHelper(int data, TreeNode* tree) const {
+    if (isFullParent(tree)) {
+        if (tree->left->data == data || tree->right->data == data) { return tree; }
+    } else {
+        if (getChild(tree)->data == data) { return tree; }
+    }
+
+    if (tree->data > data) {
+        return getParentHelper(data, tree->left);
+    } else {
+        return getParentHelper(data, tree->right);
+    }
 }
 
 BinaryTree::TreeNode* BinaryTree::getChild(TreeNode* tree) const {
-    //TODO: implement this
+    if (isSingleParent(tree)) {
+        if (tree->right != nullptr) {
+            return tree->right;
+        }
+        return tree->left;
+    }
+    return nullptr;
 }
 
 BinaryTree::TreeNode* BinaryTree::getLeftChild(TreeNode* tree) const {
-    //TODO: implement this
+    if (tree == nullptr) { return nullptr; }
+    return tree->left;
 }
 
 BinaryTree::TreeNode* BinaryTree::getRightChild(TreeNode* tree) const {
-    //TODO: implement this
+    if (tree == nullptr) { return nullptr; }
+    return tree->right;
 }
 
 BinaryTree::TreeNode* BinaryTree::getLeftMost(TreeNode* tree) const {
-    //TODO: implement this
+    if (tree->left == nullptr) { return tree; }
+    return getLeftMost(tree->left);
 }
 
 BinaryTree::TreeNode* BinaryTree::getRightMost(TreeNode* tree) const {
-    //TODO: implement this
+    if (tree->right == nullptr) { return tree; }
+    return getRightMost(tree->right);
 }
 
 BinaryTree::TreeNode* BinaryTree::getPredecessor(TreeNode* tree) const {
-    //TODO: implement this
+    if (tree == nullptr) { return nullptr; }
+    TreeNode* curr = tree;
+
+    if (curr->left != nullptr) {
+        return getMaximum(curr->left);
+    } else if (getParent(curr->data, curr) != nullptr && getParent(curr->data, curr)->right == curr) {
+        return getParent(curr->data, curr);
+    } else {
+        TreeNode* predecessor = getParent(curr->data, curr);
+
+        while (predecessor != nullptr && predecessor->left == curr) {
+            curr = predecessor;
+            predecessor = getParent(predecessor->data, predecessor);
+        }
+        
+        return predecessor;
+    }
 }
 
 BinaryTree::TreeNode* BinaryTree::getSuccessor(TreeNode* tree) const {
-    //TODO: implement this
+    if (tree == nullptr) { return nullptr; }
+    // TODO: test if we can modify tree instead of creating a pointer to it
+    TreeNode* curr = tree;
+    
+    if (curr->right != nullptr) {
+        return getMinimum(curr->right);
+    }
+
+    TreeNode* successor = getParent(curr->data, curr);
+
+    while (successor != nullptr && curr == successor->right) {
+        curr = successor;
+        successor = getParent(curr->data, curr);
+    }
+
+    return successor;
 }
+
+BinaryTree::TreeNode* BinaryTree::getMinimum(TreeNode* tree) const {
+    TreeNode* curr = tree;
+    
+    while (curr->left != nullptr) {
+        curr = curr->left;
+    }
+
+    return curr;
+}
+
+BinaryTree::TreeNode* BinaryTree::getMaximum(TreeNode* tree) const {
+    TreeNode* curr = tree;
+
+    while (curr->right != nullptr) {
+        curr = curr->right;
+    }
+
+    return curr;
+}
+
+
 
 int main() {
     BinaryTree bst;
@@ -161,6 +294,12 @@ int main() {
     bst.inOrderTraversal();
     cout << "preOrder: ";
     bst.preOrderTraversal();
+    cout << endl;
+
+    bst.del(60);
+    cout << "Deleted 60." << endl;
+    cout << "inOrder: ";
+    bst.inOrderTraversal();
     cout << endl;
 
     return 0;

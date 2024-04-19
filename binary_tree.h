@@ -29,6 +29,7 @@ private:
     bool isLeaf(TreeNode* tree) const;
     TreeNode* getNode(int data) const;
     TreeNode* getParent(int data, TreeNode* tree) const;
+    TreeNode* getParentHelper(int data, TreeNode* tree) const;
     TreeNode* getChild(TreeNode* tree) const;
     TreeNode* getLeftChild(TreeNode* tree) const;
     TreeNode* getRightChild(TreeNode* tree) const;
@@ -36,6 +37,8 @@ private:
     TreeNode* getRightMost(TreeNode* tree) const;
     TreeNode* getPredecessor(TreeNode* tree) const;
     TreeNode* getSuccessor(TreeNode* tree) const;
+    TreeNode* getMinimum(TreeNode* tree) const;
+    TreeNode* getMaximum(TreeNode* tree) const;
 
 public:
     BinaryTree();
@@ -46,7 +49,7 @@ public:
     void inOrderTraversal() const;
     void preOrderTraversal() const;
     //TODO: Add delete and supporting methods
-    bool del(TreeNode* tree);
+    bool del(int data);
 };
 
 #endif
