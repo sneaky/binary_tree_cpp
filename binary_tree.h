@@ -38,7 +38,7 @@ private:
     TreeNode* getSuccessor(TreeNode* tree) const;
     TreeNode* getMinimum(TreeNode* tree) const;
     TreeNode* getMaximum(TreeNode* tree) const;
-
+    
 public:
     BinaryTree();
     ~BinaryTree();

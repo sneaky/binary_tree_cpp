@@ -267,8 +267,6 @@ BinaryTree::TreeNode* BinaryTree::getMaximum(TreeNode* tree) const {
     return curr;
 }
 
-
-
 int main() {
     BinaryTree bst;
 
