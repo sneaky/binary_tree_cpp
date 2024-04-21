@@ -27,7 +27,7 @@ private:
     bool isSingleParent(TreeNode* tree) const;
     bool isLeaf(TreeNode* tree) const;
     TreeNode* getNode(int data) const;
-    TreeNode* getParent(int data, TreeNode* tree) const;
+    TreeNode* getParent(int data) const;
     TreeNode* getParentHelper(int data, TreeNode* tree) const;
     TreeNode* getChild(TreeNode* tree) const;
     TreeNode* getLeftChild(TreeNode* tree) const;

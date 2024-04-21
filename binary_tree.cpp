@@ -101,10 +101,10 @@ void BinaryTree::delFullParent(TreeNode* tree) {
     if (isLeaf(curr)) {
         delLeaf(curr);
     } else {
-        if (curr->data > getParent(curr->data, curr)->data) {
-            getParent(curr->data, curr)->right = curr->right;
+        if (curr->data > getParent(curr->data)->data) {
+            getParent(curr->data)->right = curr->right;
         } else {
-            getParent(curr->data, curr)->left = curr->left;
+            getParent(curr->data)->left = curr->left;
         }
         delete curr;
     }
@@ -113,7 +113,7 @@ void BinaryTree::delFullParent(TreeNode* tree) {
 }
 
 void BinaryTree::delSingleParent(TreeNode* tree)  {
-    TreeNode* curr = getParent(tree->data, tree);
+    TreeNode* curr = getParent(tree->data);
 
     if (curr->right == tree) {
         curr->right = getChild(tree);
@@ -125,10 +125,10 @@ void BinaryTree::delSingleParent(TreeNode* tree)  {
 }
 
 void BinaryTree::delLeaf(TreeNode* tree) {
-    if (tree == getParent(tree->data, tree)->right) {
-        getParent(tree->data, tree)->right = nullptr;
+    if (tree == getParent(tree->data)->right) {
+        getParent(tree->data)->right = nullptr;
     } else {
-        getParent(tree->data, tree)->left = nullptr;
+        getParent(tree->data)->left = nullptr;
     }
 
     delete tree;
@@ -160,16 +160,10 @@ BinaryTree::TreeNode* BinaryTree::getNode(int x) const {
     return curr;
 }
 
-BinaryTree::TreeNode* BinaryTree::getParent(int data, TreeNode* tree) const {
-    if (tree == nullptr) { return nullptr; }
-
-    TreeNode* curr = root;
-    return getParentHelper(data, curr);
+BinaryTree::TreeNode* BinaryTree::getParent(int data) const {
+    return getParentHelper(data, root);
 }
 
-// TODO: fix getParent() so that we don't need this helper function.
-// since we only need access to the data we want to find and the root node,
-// change getParent() parameters so we only need to pass it the data we're looking for.
 BinaryTree::TreeNode* BinaryTree::getParentHelper(int data, TreeNode* tree) const {
     if (isFullParent(tree)) {
         if (tree->left->data == data || tree->right->data == data) { return tree; }
@@ -220,14 +214,14 @@ BinaryTree::TreeNode* BinaryTree::getPredecessor(TreeNode* tree) const {
 
     if (curr->left != nullptr) {
         return getMaximum(curr->left);
-    } else if (getParent(curr->data, curr) != nullptr && getParent(curr->data, curr)->right == curr) {
-        return getParent(curr->data, curr);
+    } else if (getParent(curr->data) != nullptr && getParent(curr->data)->right == curr) {
+        return getParent(curr->data);
     } else {
-        TreeNode* predecessor = getParent(curr->data, curr);
+        TreeNode* predecessor = getParent(curr->data);
 
         while (predecessor != nullptr && predecessor->left == curr) {
             curr = predecessor;
-            predecessor = getParent(predecessor->data, predecessor);
+            predecessor = getParent(predecessor->data);
         }
         
         return predecessor;
@@ -243,11 +237,11 @@ BinaryTree::TreeNode* BinaryTree::getSuccessor(TreeNode* tree) const {
         return getMinimum(curr->right);
     }
 
-    TreeNode* successor = getParent(curr->data, curr);
+    TreeNode* successor = getParent(curr->data);
 
     while (successor != nullptr && curr == successor->right) {
         curr = successor;
-        successor = getParent(curr->data, curr);
+        successor = getParent(curr->data);
     }
 
     return successor;
