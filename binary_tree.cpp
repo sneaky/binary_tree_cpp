@@ -293,7 +293,8 @@ int main() {
     bst.preOrderTraversal();
     cout << endl;
 
-    cout << "Testing getPredecessor(getNode(60)): " << bst.testGetPredecessor(20) << endl;
+    cout << "Testing getPredecessor(getNode(60)): should be 50: " << bst.testGetPredecessor(60) << endl;
+    cout << "Testing getPredecessor(getNode(20)): should be 20: " << bst.testGetPredecessor(20) << endl;
 
     bst.del(60);
     cout << "Deleted 60." << endl;
