@@ -209,7 +209,8 @@ BinaryTree::TreeNode* BinaryTree::getRightMost(TreeNode* tree) const {
 }
 
 BinaryTree::TreeNode* BinaryTree::getPredecessor(TreeNode* tree) const {
-    if (tree == nullptr) { return nullptr; }
+    if (tree == nullptr || tree == root) { return nullptr; }
+    if (tree == getMinimum(root)) { return tree; }
     TreeNode* curr = tree;
 
     if (curr->left != nullptr) {
@@ -223,7 +224,7 @@ BinaryTree::TreeNode* BinaryTree::getPredecessor(TreeNode* tree) const {
             curr = predecessor;
             predecessor = getParent(predecessor->data);
         }
-        
+
         return predecessor;
     }
 }
@@ -292,7 +293,7 @@ int main() {
     bst.preOrderTraversal();
     cout << endl;
 
-    cout << "Testing getPredecessor(getNode(60)): " << bst.testGetPredecessor(60) << endl;
+    cout << "Testing getPredecessor(getNode(60)): " << bst.testGetPredecessor(20) << endl;
 
     bst.del(60);
     cout << "Deleted 60." << endl;
