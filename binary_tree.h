@@ -42,7 +42,7 @@ private:
 public:
     BinaryTree();
     ~BinaryTree();
-
+    int testGetPredecessor(int data) const;
     void insert(int data);
     bool search(int data) const;
     void inOrderTraversal() const;

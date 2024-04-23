@@ -267,6 +267,10 @@ BinaryTree::TreeNode* BinaryTree::getMaximum(TreeNode* tree) const {
     return curr;
 }
 
+int BinaryTree::testGetPredecessor(int data) const {
+    return getPredecessor(getNode(data))->data;
+}
+
 int main() {
     BinaryTree bst;
 
@@ -287,6 +291,8 @@ int main() {
     cout << "preOrder: ";
     bst.preOrderTraversal();
     cout << endl;
+
+    cout << "Testing getPredecessor(getNode(60)): " << bst.testGetPredecessor(60) << endl;
 
     bst.del(60);
     cout << "Deleted 60." << endl;
